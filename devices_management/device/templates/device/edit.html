@@ -1,0 +1,26 @@
+{% extends 'device/devicesTemplate.html' %}
+<style>
+
+</style>
+
+{% block PageHeader %}Edit Device{% endblock %}
+{% block Content %}
+    <div class="col-md-6">
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <br>
+            <button type="submit" class="btn btn-primary btn-submit" name="btnform1">Submit</button>
+            <br>
+            <br>
+            <br>
+
+            <button type="submit" class="btn btn-danger" name="btnform2">Remove This Device</button>
+
+        </form>
+
+    </div>
+    <script>
+
+    </script>
+{% endblock %}

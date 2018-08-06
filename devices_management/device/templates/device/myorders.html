@@ -1,0 +1,72 @@
+{% extends 'device/devicesTemplate.html' %}
+{% block PageHeader %}My Orders{% endblock %}
+{% block Content %}
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-md-12">
+                <div>
+
+                    <table class="table table-sm" id="devicestable">
+                        <thead>
+                        <tr>
+                            <th>
+
+                            </th>
+                            <th>
+                                Code
+                            </th>
+                            <th>
+                                Device Name
+                            </th>
+                            <th>
+                                Project
+                            </th>
+                            <th>
+                                Booked To
+                            </th>
+                            <th>
+                                Status
+                            </th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        {% for order in orders %}
+                            {% if order.user.username == user.username %}
+                            <tr>
+                                <td>
+                                    {{ order.orderFrom|date:'H:i, d-m-Y' }}
+                                </td>
+                                <td>
+                                    {{ order.device.code }}
+                                </td>
+                                <td>
+                                    {{ order.device.name }}
+                                </td>
+                                <td>
+                                    {{ order.project.name }}
+                                </td>
+                                <td>
+                                    {{ order.orderTo|date:'H:i, d-m-Y' }}
+                                </td>
+                                <td>
+                                    {{ order.status }}
+                                </td>
+
+
+
+                            </tr>
+                            {% endif %}
+                        {% endfor %}
+
+                        </tbody>
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

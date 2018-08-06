@@ -1,0 +1,51 @@
+{% extends 'pages/base.html' %}
+
+
+{% block menu %}
+    <div class="navbar-default sidebar" role="navigation">
+        <div class="bs-slidebar">
+            <h4 class="menuhead" data-toggle="collapse" data-target="#collapse1"><i class="fa fa-"></i><b>Device
+                Manager</b></h4>
+            <div id="collapse1" class="collapse in">
+                <ul class="nav flex-column">
+                    {% if user.username and user.is_superuser %}
+                        <li class="li1"><a href="{% url 'add' %}"><i class="fa fa-plus fa-fw"></i>Add Device</a></li>
+                    {% endif %}
+                    <li class="li1"><a href="{% url 'listdevices' %}"><i class="fa fa-list fa-fw"></i>List Device</a>
+                    </li>
+                    {% if user.is_superuser %}
+                        <li class="li1"><a href="/bookAdmin/0"><i class="fa fa-edit fa-fw"></i>Book Device Admin</a>
+                        </li>
+                    {% else %}
+                        <li class="li1"><a href="/book/0"><i class="fa fa-edit fa-fw"></i>Book Device</a>
+                        </li>
+                    {% endif %}
+                    {% if user.username and user.is_superuser %}
+                        <li class="li1"><a href="/orderlists/"><i class="fa fa-wrench fa-fw"></i>Orders List</a></li>
+                    {% endif %}
+                    {% if user.username and user.role.is_ns %}
+                        <li class="li1"><a href="/mydevices/"><i class="fa fa-list fa-fw"></i>My Devices</a></li>
+                        <li class="li1"><a href="/myorders/"><i class="fa fa-list fa-fw"></i>My Order</a></li>
+                    {% endif %}
+                    {% if user.username and user.role.is_bse %}
+                        <li class="li1"><a href="/addsup/"><i class="fa fa-plus fa-fw"></i>Supplement</a></li>
+                        <li class="li1"><a href="/mysupps/"><i class="fa fa-list fa-fw"></i>My Supplement</a></li>
+                    {% endif %}
+                    {% if user.username and user.is_superuser %}
+                        <li class="li1"><a href="/supplistadmin/"><i class="fa fa-list fa-fw"></i>Supplement List</a>
+                        </li>
+                    {% endif %}
+                    {% if user.username and user.is_superuser %}
+                        <li class="li1"><a href="{% url 'createuser' %}"><i class="fa fa-plus fa-fw"></i>Create User</a>
+                        </li>
+                        <li class="li1"><a href="{% url 'addprj' %}"><i class="fa fa-plus fa-fw"></i>Add Project</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+
+        </div>
+        <!-- /.sidebar-collapse -->
+    </div>
+    <!-- /.navbar-static-side -->
+{% endblock %}

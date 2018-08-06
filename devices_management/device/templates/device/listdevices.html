@@ -1,0 +1,241 @@
+{% extends 'device/devicesTemplate.html' %}
+<style>
+
+
+</style>
+{% block PageHeader %}List Devices{% endblock %}
+{% block Content %}
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="row">
+                    <form method="GET" action="/search/" id="searchform">
+                        {% csrf_token %}
+                        <div class="col-sm-4 col-sm-offset-4 pull-right">
+                            <div class="input-group custom-search-form">
+                                {% if ct %}
+                                    <input type="text" name="srh" class="form-control" placeholder="Search..."
+                                           value="{{ ct }}">
+                                {% else %}
+                                    <input type="text" name="srh" class="form-control" placeholder="Search...">
+                                {% endif %}
+                                <span class="input-group-btn">
+                                <button class="btn btn-default" type="submit">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div>
+                    {% if messages %}
+                        <ul class="messages">
+                            {% for m in messages %}
+                                <li style="color:red">{{ m }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+                <br>
+                <div>
+
+                    <table class="table table-sm table-bordered" id="devicestable">
+                        <thead>
+                        <tr>
+                            <th>
+                                No.
+                            </th>
+                            <th>
+                                Code
+                            </th>
+                            <th>
+                                Name
+                            </th>
+                            <th>
+                                Type
+                            </th>
+                            <th>
+                                OS Type
+                            </th>
+                            <th>
+                                Version
+                            </th>
+                            <th>
+                                Keeper
+                            </th>
+                            <th>
+                                Project
+                            </th>
+                            <th>
+                                From
+                            </th>
+                            <th>
+                                To
+                            </th>
+                            <th>
+                                Status
+                            </th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% if sr %}
+                            {% for device in sr %}
+                                <tr>
+                                    <td>
+
+                                    </td>
+                                    <td>
+                                        {% if user.username and user.is_superuser %}
+                                            <a href="/edit/{{ device.id }}">{{ device.code }}</a>
+                                        {% else %}
+                                            {{ device.code }}
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {{ device.name }}
+                                    </td>
+                                    <td>
+                                        {{ device.type }}
+                                    </td>
+                                    <td>
+                                        {{ device.osType }}
+                                    </td>
+                                    <td>
+                                        {{ device.version }}
+                                    </td>
+                                    <td>
+                                        {{ device.keeper }}
+                                    </td>
+                                    <td>
+                                        {{ device.project.name }}
+                                    </td>
+                                    <td>
+                                        {{ device.bookedFrom|date:'H:i, d-m-Y' }}
+                                    </td>
+                                    <td>
+                                        {{ device.bookedTo|date:'H:i, d-m-Y' }}
+                                    </td>
+                                    <td>
+                                        {% if device.status == "Free" %}
+                                            {% if user.is_superuser %}
+                                                <a href="/bookAdmin/{{ device.id }}">{{ device.status }}</a>
+                                            {% else %}
+                                                <a href="/book/{{ device.id }}">{{ device.status }}</a>
+                                            {% endif %}
+                                        {% else %}
+                                            {{ device.status }}
+                                        {% endif %}
+                                    </td>
+
+
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            {% for device in devices %}
+                                <tr>
+                                    <td>
+
+                                    </td>
+                                    <td>
+                                        {% if user.username and user.is_superuser %}
+                                            <a href="/edit/{{ device.id }}">{{ device.code }}</a>
+                                        {% else %}
+                                            {{ device.code }}
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {{ device.name }}
+                                    </td>
+                                    <td>
+                                        {{ device.type }}
+                                    </td>
+                                    <td>
+                                        {{ device.osType }}
+                                    </td>
+                                    <td>
+                                        {{ device.version }}
+                                    </td>
+                                    <td>
+                                        {{ device.keeper }}
+                                    </td>
+                                    <td>
+                                        {{ device.project.name }}
+                                    </td>
+                                    <td>
+                                        {{ device.bookedFrom|date:'H:i, d-m-Y' }}
+                                    </td>
+                                    <td>
+                                        {{ device.bookedTo|date:'H:i, d-m-Y' }}
+                                    </td>
+                                    <td>
+                                        {% if device.status == "Free" %}
+                                            {% if user.is_superuser %}
+                                                <a href="/bookAdmin/{{ device.id }}">{{ device.status }}</a>
+                                            {% else %}
+                                                <a href="/book/{{ device.id }}">{{ device.status }}</a>
+                                            {% endif %}
+                                        {% else %}
+                                            {{ device.status }}
+                                        {% endif %}
+                                    </td>
+
+
+                                </tr>
+                            {% endfor %}
+                        {% endif %}
+
+                        </tbody>
+                    </table>
+
+
+                </div>
+                {% if sr %}
+                    <div class="pagination">
+                    <span class="step-links">
+                        {% if sr.has_previous %}
+                            <a href="?page=
+
+                                    {{ sr.previous_page_number }}{% if request.GET.srh %}&srh={{ request.GET.srh }}{% endif %}">Previous</a>
+                        {% endif %}
+                    </span>
+
+                        <span class="current">
+                        Page {{ sr.number }} of {{ sr.paginator.num_pages }}.
+                    </span>
+
+                        <span>
+                        {% if sr.has_next %}
+                            <a href="?page=
+
+                                    {{ sr.next_page_number }}{% if request.GET.srh %}&srh={{ request.GET.srh }}{% endif %}">Next</a>
+                        {% endif %}
+                    </span>
+                    </div>
+                {% else %}
+                    <div class="pagination">
+                    <span class="step-links">
+                        {% if devices.has_previous %}
+                            <a href="?page={{ devices.previous_page_number }}">Previous</a>
+                        {% endif %}
+                    </span>
+
+                        <span class="current">
+                        Page {{ devices.number }} of {{ devices.paginator.num_pages }}.
+                    </span>
+
+                        <span>
+                        {% if devices.has_next %}
+                            <a href="?page={{ devices.next_page_number }}">Next</a>
+                        {% endif %}
+                    </span>
+                    </div>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

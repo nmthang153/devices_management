@@ -1,0 +1,17 @@
+{% extends 'device/devicesTemplate.html' %}
+<style>
+
+</style>
+{% block PageHeader %}Add Devices{% endblock %}
+
+{% block Content %}
+    <div class="col-md-6">
+        <form method="POST">
+            {% csrf_token %}
+
+                {{ form.as_p }}
+
+            <button type="submit" class="btn btn-primary btn-submit">ADD</button>
+        </form>
+    </div>
+{% endblock %}

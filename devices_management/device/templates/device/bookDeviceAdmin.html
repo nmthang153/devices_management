@@ -1,0 +1,17 @@
+{% extends 'device/devicesTemplate.html' %}
+{% block PageHeader %}Book Device{% endblock %}
+
+{% block Content %}
+    <div class="col-md-6">
+        <form method="POST">
+            {% csrf_token %}
+
+                {{ form.as_p }}
+
+            {% if not user.is_superuser %}
+                <input type="hidden" name="keeper" value="{{ user.username }}">
+            {% endif %}
+            <button type="submit" class="btn btn-primary btn-submit">Book</button>
+        </form>
+    </div>
+{% endblock %}

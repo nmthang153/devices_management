@@ -1,0 +1,91 @@
+{% extends 'device/devicesTemplate.html' %}
+{% block PageHeader %}Orders{% endblock %}
+{% block Content %}
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-md-12">
+                <div>
+
+                    <table class="table table-sm" id="devicestable">
+                        <thead>
+                        <tr>
+                            <th>
+
+                            </th>
+                            <th>
+                                User
+                            </th>
+                            <th>
+                                Device Name
+                            </th>
+                            <th>
+                                Type
+                            </th>
+                            <th>
+                                OS Type
+                            </th>
+                            <th>
+                                Version
+                            </th>
+                            <th>
+                                Project
+                            </th>
+                            <th>
+                                Quantity
+                            </th>
+                            <th>
+                                Status
+                            </th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        {% for supp in supps %}
+                            {% if supp.user.username == user.username %}
+                            <tr>
+                                <td>
+                                    {{ supp.orderFrom|date:'H:i, d-m-Y' }}
+                                </td>
+                                <td>
+                                    {{ supp.user }}
+                                </td>
+
+                                <td>
+                                    {{ supp.name }}
+                                </td>
+                                <td>
+                                    {{ supp.type }}
+                                </td>
+                                <td>
+                                    {{ supp.osType }}
+                                </td>
+                                <td>
+                                    {{ supp.version }}
+                                </td>
+                                <td>
+                                    {{ supp.project.name }}
+                                </td>
+                                <td>
+                                    {{ supp.quantity }}
+                                </td>
+                                <td>
+                                    {{ supp.status }}
+                                </td>
+
+
+                            </tr>
+                            {% endif %}
+                        {% endfor %}
+
+                        </tbody>
+                    </table>
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
